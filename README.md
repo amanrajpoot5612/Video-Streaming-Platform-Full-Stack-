@@ -78,7 +78,7 @@ src/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/video-streaming-frontend.git
+git clone https://github.com/amanrajpoot5612/Video-Streaming-Platform.git
 cd video-streaming-frontend
 
 # Install dependencies
@@ -94,10 +94,20 @@ Make sure the backend server is running on the correct port (http://localhost:50
 ***
 ```
 
+## Images
+
+<img src = "./public/image.png">
+<img src = "./public/image2.png">
+<img src = "./public/image3.png">
+<img src = "./public/image.png">
+<img src = "./public/image.png">
+<img src = "./public/image.png">
+
+
 ##  📬 Contact Me
 If you have any suggestions, feedback, or just want to connect:
-- 📧 Email: amanofficialbusiness@gmail.com
-- GitHub: @your-
+- 📧 Email: amanrajpoot5612@gmail.com
+- GitHub: @amanrajpoot5612
 - 📫 Feel free to raise issues or open pull requests!
 
 ## 📅 Last Updated
