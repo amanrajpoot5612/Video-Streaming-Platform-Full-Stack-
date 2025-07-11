@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import './textured-bg.css';
+
+/* index.css or App.css */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+
+*{
+    font-family: 'Anton' , sans-serif;
+}
+
+
+
+/* Hide scrollbar for all browsers */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
