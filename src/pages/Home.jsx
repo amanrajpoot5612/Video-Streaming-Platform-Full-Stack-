@@ -1,38 +1,48 @@
-// pages/Profile.jsx
-import React, { useEffect, useState } from 'react';
-import axiosInstance from '../api/axios';
+import React from 'react'
+import { Routes , Route, Outlet } from 'react-router-dom'
+import Navbar from '../component/Navbar'
+import DarkLayout from '../component/DarkLayout'
+import Sidebar from '../component/Sidebar'
+// pages/Home.jsx
+import PageWrapper from '../Animation/PageWrapper'
 
-const Profile = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  const fetchUserData = async () => {
-    try {
-      const res = await axiosInstance.get('/users/me');
-      setUser(res.data.user);
-    } catch (err) {
-      console.error("Error fetching user:", err.response?.data || err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
-
-  if (!user) return <p>User not logged in.</p>;
-
+const Home = () => {
   return (
-    <div>
-      <h2>Welcome, {user.fullName || user.username}</h2>
-      <p>Email: {user.email}</p>
-      {user.avatar && <img src={user.avatar} alt="Avatar" width="100" />}
-      {/* Add more user info as needed */}
-    </div>
-  );
-};
+    // hero component
+    <div className='textured-bg h-full w-full flex flex-col text-white overflow-hidden'>
+        
+        {/* header component */}
+        <header className='fixed left-0 z-50 top-0 w-full h-16 bg-gray-700 flex justify-between space-x-4 textured-bg'>
+            <Navbar/>
+        </header>
 
-export default Profile;
+        {/* main content component */}
+        <div className="content flex flex-grow h-full">
+
+            {/* Sidebar component */}
+            <aside className="aside transition-all duration-300 ease-in-out flex-shrink-0">
+                <Sidebar></Sidebar>
+            </aside>
+
+            {/* Hero section */}
+            <main className=" flex-grow flex-col h-[calc(100vh-4rem)] items-center justify-center overflow-y-auto scrollbar-hide">
+              <PageWrapper>
+                <Outlet />
+              </PageWrapper>
+              
+                {/* <Hero></Hero> */}
+            </main>
+
+        </div>
+
+      {/* footer component */}
+
+      <footer>
+        {/* <Footer></Footer> */}
+      </footer>
+    </div>
+  )
+}
+
+export default Home
