@@ -22,3 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+
+
+<ul className="space-y-2">
+            <li className="p-2 rounded"
+                onMouseEnter={(e) => e.currentTarget.classList.add('textured-bg')}
+                onMouseLeave={(e) => e.currentTarget.classList.remove('textured-bg')}
+            >Item 1</li>
+            <li className="textured-bg hover:bg-navbar p-2 rounded">Item 2</li>
+            <li className="textured-bg hover:bg-navbar p-2 rounded">Item 3</li>
+            <li className="textured-bg hover:bg-navbar p-2 rounded">Item 4</li>
+            </ul>
