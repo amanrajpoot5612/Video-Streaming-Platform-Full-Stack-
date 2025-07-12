@@ -1,37 +1,55 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./pages/AuthPages/Register";
-import Login from "./pages/AuthPages/Login";
+import { lazy, Suspense, useEffect, useState } from "react";
+
+const Register = lazy(() => import("./pages/AuthPages/Register"));
+const Login = lazy(() => import("./pages/AuthPages/Login"))
 
 
-import Home from "./pages/Home";
+const Home = lazy(() => import("./pages/Home"));
 import { AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import LayoutRoute from "./Animation/LayoutRoute";
 
 import "./index.css";
+import VideoPlayer from "./component/VideoPlayer";
+import PlayerPage from "./pages/PlayerPage/PlayerPage";
+// import { clearTimeout } from "timers";
 
-import Test from "./pages/Test";
-import Hero from "./pages/Hero";
-import Movies from './pages/SidePages/Movies'
-import News from './pages/SidePages/News'
-import Sports from './pages/SidePages/Sports'
-import History from './pages/SidePages/History'
-import Liked from './pages/SidePages/Liked'
-import Subscription from './pages/SidePages/Subscription'
-import Setting from './pages/SidePages/Setting'
-import Help from './pages/SidePages/Help'
-import Shorts from "./pages/SidePages/Shorts";
-import NotFound from "./pages/NotFound";
-import Preloader from "./Preloader/Preloader";
+const Test = lazy(() => import("./pages/Test"));
+const Hero = lazy(() => import("./pages/Hero"));
+const Movies = lazy(() => import("./pages/SidePages/Movies"));
+const News = lazy(() => import("./pages/SidePages/News"));
+const Sports = lazy(() => import("./pages/SidePages/Sports"));
+const History = lazy(() => import("./pages/SidePages/History"));
+const Liked = lazy(() => import("./pages/SidePages/Liked"));
+const Subscription = lazy(() => import("./pages/SidePages/Subscription"));
+const Setting = lazy(() => import("./pages/SidePages/Setting"));
+const Help = lazy(() => import("./pages/SidePages/Help"));
+const Shorts = lazy(() => import("./pages/SidePages/Shorts"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+// const Art = lazy(() => import("./pages/NavPages/Art"));
+const Trending = lazy(() => import("./pages/NavPages/Trending"));
+const Music = lazy(() => import("./pages/NavPages/Music"));
 
+const Preloader = lazy(() => import("./Preloader/Preloader"));
 
 function App() {
 
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false) , 3500
+    });
+    return () => clearTimeout(timer);
+  } , []);
+
 
   return (
     
     <AnimatePresence mode="wait">
+       <Suspense fallback={<Preloader></Preloader>}>
       <Routes location={location} key={location.pathname}>
 
               <Route path="/" element={<Home />}>
@@ -46,9 +64,13 @@ function App() {
                 <Route path='subscription' element={<Subscription/>}/>
                 <Route path='settings' element={<Setting/>}/>
                 <Route path='help' element={<Help/>}/>
+                {/* <Route path='art' element={<Art/>}/> */}
+                <Route path='trending' element={<Trending/>}/>
+                <Route path='music' element={<Music/>}/>
               </Route>
 
-
+              <Route path="/video-player" element={<PlayerPage />} />
+              <Route path="/video-player-demo" element={<VideoPlayer />} />
                 {/* Auth Routes */}
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
@@ -61,6 +83,7 @@ function App() {
                 <Route path="*" element={<NotFound/>}></Route>
 
       </Routes>
+      </Suspense>
     </AnimatePresence>
   );
 }
