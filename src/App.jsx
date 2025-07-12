@@ -13,6 +13,7 @@ import LayoutRoute from "./Animation/LayoutRoute";
 import "./index.css";
 import VideoPlayer from "./component/VideoPlayer";
 import PlayerPage from "./pages/PlayerPage/PlayerPage";
+import ArchitectureShowcase from "./pages/Showcase/ArchitectureShowcase";
 // import { clearTimeout } from "timers";
 
 const Test = lazy(() => import("./pages/Test"));
@@ -71,6 +72,10 @@ function App() {
 
               <Route path="/video-player" element={<PlayerPage />} />
               <Route path="/video-player-demo" element={<VideoPlayer />} />
+
+                {/* Showcase Routes */}
+                <Route path="/showcase" element={<ArchitectureShowcase />}/>
+        
                 {/* Auth Routes */}
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
