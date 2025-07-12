@@ -178,13 +178,13 @@ const ArchitectureShowcase = () => {
                         <h3 className="text-xl font-bold mb-2">Want to see it in action?</h3>
                         <p className="mb-4">Check out the live demo or explore the source code!</p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link to={'https://amanrajpoot-bugsy.vercel.app/'}>
+                            <Link target='1' to={'https://amanrajpoot-bugsy.vercel.app/'}>
                                 <button className="bg-white text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
                                     View Live Demo
                                 </button>
                             </Link>
 
-                            <Link to={'https://github.com/amanrajpoot5612/Video-Streaming-Platform-Full-Stack-'}>
+                            <Link target='1' to={'https://github.com/amanrajpoot5612/Video-Streaming-Platform-Full-Stack-'}>
                                 <button className="bg-transparent border-2 border-white text-white px-6 py-2 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition-colors">
                                     GitHub Repository
                                 </button></Link>
