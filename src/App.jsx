@@ -22,6 +22,7 @@ import Setting from './pages/SidePages/Setting'
 import Help from './pages/SidePages/Help'
 import Shorts from "./pages/SidePages/Shorts";
 import NotFound from "./pages/NotFound";
+import Preloader from "./Preloader/Preloader";
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
                 {/* Auth Routes */}
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/preloader" element={<Preloader />} />
 
                 {/* Test Route */}
                 <Route path="/test" element={<Test/>}></Route>
