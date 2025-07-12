@@ -251,7 +251,7 @@ const VideoPlayer = () => {
         </div>
       </div>
       {/* Video Title and Description */}
-      <div className="p-4 textured-bg bg-sidebar text-white rounded-b-lg">
+      <div className="p-4 textured-bg bg-sidebar text-white rounded-b-lg font-serif">
         <h3 className="text-lg font-semibold mb-1">Big Buck Bunny</h3>
         <p className="text-sm text-gray-400">A short animated film about a big, friendly bunny.</p>
         <div className="text-xs text-gray-500 mt-2">
