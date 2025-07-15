@@ -11,6 +11,14 @@ node_modules
 dist
 dist-ssr
 *.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env
+.env.development
+.env.test
+.env.production
 
 # Editor directories and files
 .vscode/*
@@ -23,15 +31,3 @@ dist-ssr
 *.sln
 *.sw?
 
-
-
-
-<ul className="space-y-2">
-            <li className="p-2 rounded"
-                onMouseEnter={(e) => e.currentTarget.classList.add('textured-bg')}
-                onMouseLeave={(e) => e.currentTarget.classList.remove('textured-bg')}
-            >Item 1</li>
-            <li className="textured-bg hover:bg-navbar p-2 rounded">Item 2</li>
-            <li className="textured-bg hover:bg-navbar p-2 rounded">Item 3</li>
-            <li className="textured-bg hover:bg-navbar p-2 rounded">Item 4</li>
-            </ul>
