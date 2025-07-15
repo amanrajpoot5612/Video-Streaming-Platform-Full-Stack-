@@ -1,5 +1,5 @@
 import axios from "axios";
-import { backend_prod } from "./CONFIG.JS";
+import { backend_prod } from "./_config.js";
 
 const axiosInstance = axios.create({
   // baseURL: "http://localhost:8000/api/v1",
