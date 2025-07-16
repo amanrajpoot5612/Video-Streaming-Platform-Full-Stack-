@@ -99,16 +99,24 @@ export default function UploadVideo() {
       headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     });
-    if (res.status !== 200) {
+    if (res.status !== 201) {
         throw new Error("Upload failed");
     }
     setToast({ message: "Upload successful!", type: "success" });
     console.log("Upload response:", res.data);
+    setTimeout(() => {
+        setToast(null);
+    } , 3000)
+    setFormData({ video: null, thumbnail: null, title: '', description: '', duration: '' });
+    setPreview({ thumbnail: null, videoURL: null });
   } catch (err) {
     console.error("Upload error:", err);
     const message =
       err?.response?.data?.message || "Upload failed. Try again.";
     setToast({ message, type: "error" });
+    setTimeout(() => {
+        setToast(null);
+    } , 3000)
   }
 };
 
