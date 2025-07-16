@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { User, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
+import axiosInstance from '../../api/axios';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -16,35 +17,46 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Replace with actual API call:
-      // const res = await axiosInstance.post('/users/login', {
-      //   username: formData.username,
-      //   password: formData.password
-      // });
-      
-      console.log('Login success');
-      alert('Login successful!');
-      
-      // Reset form
-      setFormData({
-        username: '',
-        password: ''
-      });
-    } catch (err) {
-      console.error('Error:', err.response?.data || err.message);
-      alert('Login failed. Please check your credentials.');
-    } finally {
-      setIsLoading(false);
+  const { username, password } = formData;
+
+  // Validate fields before sending request
+  if (!username || !password) {
+    alert("Please fill in all fields.");
+    setIsLoading(false);
+    return;
+  }
+
+  try {
+    const res = await axiosInstance.post(
+      "/users/login",
+      { username, password },
+      { withCredentials: true }
+    );
+
+    if (res.status === 200) {
+      alert("Login successful!");
+      // You can also redirect here: navigate('/dashboard');
+    } else {
+      alert("Login failed. Please check your credentials.");
     }
-  };
+
+    // Reset form fields
+    setFormData({ username: "", password: "" });
+
+  } catch (err) {
+    console.error("Login Error:", err.response?.data || err.message);
+    const message =
+      err.response?.data?.message || "Login failed. Please try again.";
+    alert(message);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-neutral-900 flex">
