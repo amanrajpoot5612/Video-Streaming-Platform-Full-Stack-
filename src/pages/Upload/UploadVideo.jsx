@@ -105,6 +105,9 @@ export default function UploadVideo() {
     setToast({ message: "Upload successful!", type: "success" });
     console.log("Upload response:", res.data);
     setTimeout(() => {
+        setToast({ message: "wait for few seconds", type: "wait" }); 
+    } , 3000);
+    setTimeout(() => {
         setToast(null);
     } , 3000)
     setFormData({ video: null, thumbnail: null, title: '', description: '', duration: '' });
