@@ -16,7 +16,8 @@ import {
   Heart as HeartIcon,
   Award as AwardIcon,
   Star as StarIcon,
-  MonitorPlay as MonitorPlayIcon
+  MonitorPlay as MonitorPlayIcon,
+  VideoIcon
 } from "lucide-react";
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
@@ -31,6 +32,7 @@ const Sidebar = () => {
         { name: 'History', link: '/history', icon: <HistoryIcon /> },
         { name: 'Liked', link: '/liked' , icon: <HeartIcon /> },
         { name: 'Subscription', link: '/subscription', icon: <UserIcon /> },
+        { name: 'Create', link: '/create', icon: <VideoIcon /> },
         { name: 'Settings', link: '/settings' , icon: <SettingsIcon /> },
         { name: 'Help and Feeedback', link: '/help' , icon: <HelpCircleIcon /> },   
     ]

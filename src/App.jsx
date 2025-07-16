@@ -14,6 +14,8 @@ import "./index.css";
 import VideoPlayer from "./component/VideoPlayer";
 import PlayerPage from "./pages/PlayerPage/PlayerPage";
 import ArchitectureShowcase from "./pages/Showcase/ArchitectureShowcase";
+import UploadVideo from "./pages/Upload/UploadVideo";
+import TestUpload from "./pages/Upload/TestUpload";
 // import { clearTimeout } from "timers";
 
 const Test = lazy(() => import("./pages/Test"));
@@ -70,8 +72,14 @@ function App() {
                 <Route path='music' element={<Music/>}/>
               </Route>
 
+              {/* Video Player Route */}
+              <Route path="/upload-test" element={<TestUpload />} />
+              {/* <Route path="/video-player/:id" element={<PlayerPage />} /> */}
               <Route path="/video-player" element={<PlayerPage />} />
               <Route path="/video-player-demo" element={<VideoPlayer />} />
+
+              {/* Upload Video Route */}
+              <Route path="/upload-video" element={<UploadVideo />} />
 
                 {/* Showcase Routes */}
                 <Route path="/showcase" element={<ArchitectureShowcase />}/>
@@ -79,6 +87,8 @@ function App() {
                 {/* Auth Routes */}
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+
+                {/* Layout Route */}
                 <Route path="/preloader" element={<Preloader />} />
 
                 {/* Test Route */}
