@@ -1,72 +1,72 @@
 import React, { useState } from 'react';
 import { User, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; // Add this import
 import axiosInstance from '../../api/axios';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '', // Changed from username to email to match your form
     password: ''
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate(); // Add this line
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  const { username, password } = formData;
+    const { email, password } = formData;
 
-  // Validate fields before sending request
-  if (!username || !password) {
-    alert("Please fill in all fields.");
-    setIsLoading(false);
-    return;
-  }
+    // Validate fields before sending request
+    if (!email || !password) {
+      alert("Please fill in all fields.");
+      setIsLoading(false);
+      return;
+    }
 
-  try {
-    const res = await axiosInstance.post(
-      "/users/login",
-      {
-        username: null, // Assuming username is used for login
-        password,
-        email,
-      },
-      {
-      withCredentials: true, // Ensure cookies are sent with the request
-      headers: {
-      'Content-Type': 'application/json',
+    try {
+      const res = await axiosInstance.post(
+        "/users/login",
+        {
+          email: email,        // Send email
+          username: null,     // Send the same value as username (since backend accepts both)
+          password: password,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+      );
+
+      if (res.status === 200) {
+        alert("Login successful!");
+        navigate('/'); // Fixed: was navigator, now navigate
+      } else {
+        alert("Login failed. Please check your credentials.");
       }
+
+      // Reset form fields
+      setFormData({ email: "", password: "" });
+
+    } catch (err) {
+      console.error("Login Error:", err.response?.data || err.message);
+      const message =
+        err.response?.data?.message || "Login failed. Please try again.";
+      alert(message);
+    } finally {
+      setIsLoading(false);
     }
-    );
-
-    if (res.status === 200) {
-      alert("Login successful!");
-      navigator('/')
-      // You can also redirect here: navigate('/dashboard');
-    } else {
-      alert("Login failed. Please check your credentials.");
-    }
-
-    // Reset form fields
-    setFormData({ username: "", password: "" });
-
-  } catch (err) {
-    console.error("Login Error:", err.response?.data || err.message);
-    const message =
-      err.response?.data?.message || "Login failed. Please try again.";
-    alert(message);
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen bg-neutral-900 flex">
@@ -116,8 +116,8 @@ const Login = () => {
               <p className="text-neutral-400">Welcome back! Please enter your details</p>
             </div>
 
-            <div className="space-y-6">
-              {/* Username/Email */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-neutral-300 mb-2">
                   Email
@@ -125,7 +125,7 @@ const Login = () => {
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" />
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     value={formData.email}
                     placeholder="Enter your email"
@@ -184,7 +184,6 @@ const Login = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                onClick={handleSubmit}
                 disabled={isLoading}
                 className="w-full py-3 px-4 bg-neutral-700 hover:bg-neutral-600 disabled:bg-neutral-800 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 disabled:cursor-not-allowed"
               >
@@ -213,7 +212,7 @@ const Login = () => {
 
               {/* Social Login Buttons */}
               <div className="grid grid-cols-2 gap-3">
-                <button className="flex items-center justify-center px-4 py-2 border border-neutral-600 rounded-lg text-neutral-300 hover:bg-neutral-700 transition-colors">
+                <button type="button" className="flex items-center justify-center px-4 py-2 border border-neutral-600 rounded-lg text-neutral-300 hover:bg-neutral-700 transition-colors">
                   <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -223,14 +222,14 @@ const Login = () => {
                   Google
                 </button>
                 
-                <button className="flex items-center justify-center px-4 py-2 border border-neutral-600 rounded-lg text-neutral-300 hover:bg-neutral-700 transition-colors">
+                <button type="button" className="flex items-center justify-center px-4 py-2 border border-neutral-600 rounded-lg text-neutral-300 hover:bg-neutral-700 transition-colors">
                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
                   </svg>
                   Twitter
                 </button>
               </div>
-            </div>
+            </form>
 
             {/* Footer */}
             <div className="mt-6 text-center">
