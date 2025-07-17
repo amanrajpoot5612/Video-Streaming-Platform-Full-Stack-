@@ -33,12 +33,22 @@ const Login = () => {
   try {
     const res = await axiosInstance.post(
       "/users/login",
-      { username, password },
-      { withCredentials: true }
+      {
+        username: null, // Assuming username is used for login
+        password,
+        email,
+      },
+      {
+      withCredentials: true, // Ensure cookies are sent with the request
+      headers: {
+      'Content-Type': 'application/json',
+      }
+    }
     );
 
     if (res.status === 200) {
       alert("Login successful!");
+      navigator('/')
       // You can also redirect here: navigate('/dashboard');
     } else {
       alert("Login failed. Please check your credentials.");
@@ -110,15 +120,15 @@ const Login = () => {
               {/* Username/Email */}
               <div>
                 <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Username or Email
+                  Email
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" />
                   <input
                     type="text"
-                    name="username"
+                    name="email"
                     value={formData.username}
-                    placeholder="Enter your username or email"
+                    placeholder="Enter your email"
                     onChange={handleChange}
                     required
                     className="w-full pl-10 pr-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent transition-colors"
