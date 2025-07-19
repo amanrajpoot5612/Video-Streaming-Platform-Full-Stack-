@@ -16,9 +16,10 @@ import PlayerPage from "./pages/PlayerPage/PlayerPage";
 import ArchitectureShowcase from "./pages/Showcase/ArchitectureShowcase";
 import UploadVideo from "./pages/Upload/UploadVideo";
 import TestUpload from "./pages/Upload/TestUpload";
+import Profile from "./pages/Profile/Profile";
 // import { clearTimeout } from "timers";
 
-const Test = lazy(() => import("./pages/Test"));
+// const Test = lazy(() => import("./pages/Test"));
 const Hero = lazy(() => import("./pages/Hero"));
 const Movies = lazy(() => import("./pages/SidePages/Movies"));
 const News = lazy(() => import("./pages/SidePages/News"));
@@ -35,6 +36,7 @@ const Trending = lazy(() => import("./pages/NavPages/Trending"));
 const Music = lazy(() => import("./pages/NavPages/Music"));
 
 const Preloader = lazy(() => import("./Preloader/Preloader"));
+const Test = lazy(() => import('./pages/Test'));
 
 function App() {
 
@@ -67,6 +69,7 @@ function App() {
                 <Route path='subscription' element={<Subscription/>}/>
                 <Route path='settings' element={<Setting/>}/>
                 <Route path='help' element={<Help/>}/>
+                <Route path="profile" element={<Profile/>}/>
                 {/* <Route path='art' element={<Art/>}/> */}
                 <Route path='trending' element={<Trending/>}/>
                 <Route path='music' element={<Music/>}/>
