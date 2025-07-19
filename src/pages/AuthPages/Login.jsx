@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState,  useEffect } from 'react';
 import { User, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
-import { useNavigate } from 'react-router-dom'; // Add this import
+import { useNavigate } from 'react-router-dom'; 
+// Add this import
 import axiosInstance from '../../api/axios';
+import Notification from '../../component/Notification';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: '', // Changed from username to email to match your form
+    username: '', // Changed from username to email to match your form
     password: ''
   });
+  const [notif, setNotif] = useState(null);
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,14 +23,19 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     setIsLoading(true);
 
-    const { email, password } = formData;
+    const { username, password } = formData;
 
     // Validate fields before sending request
-    if (!email || !password) {
-      alert("Please fill in all fields.");
+    if (!username || !password) {
+      setNotif({
+        message: "Please fill in all fields.",
+        color: "red",
+        duration: 3000
+      });
       setIsLoading(false);
       return;
     }
@@ -36,8 +44,8 @@ const Login = () => {
       const res = await axiosInstance.post(
         "/users/login",
         {
-          email: email,        // Send email
-          username: null,     // Send the same value as username (since backend accepts both)
+          username: username,        // Send email
+          email: null,     // Send the same value as username (since backend accepts both)
           password: password,
         },
         {
@@ -49,21 +57,40 @@ const Login = () => {
       );
 
       if (res.status === 200) {
-        alert("Login successful!");
+        // alert("Login successful!");
+          setNotif({
+        message: "Login successful!",
+        color: "green",
+        duration: 3000
+      });
+        setIsLoading(false);
         navigate('/'); // Fixed: was navigator, now navigate
       } else {
-        alert("Login failed. Please check your credentials.");
+        // alert("Login failed. Please check your credentials.");
+          setNotif({
+        message: "Login failed. Please check your credentials.",
+        color: "red",
+        duration: 3000
+      });
       }
 
       // Reset form fields
-      setFormData({ email: "", password: "" });
+      setFormData({ username: "", password: "" });
 
-    } catch (err) {
-      console.error("Login Error:", err.response?.data || err.message);
-      const message =
-        err.response?.data?.message || "Login failed. Please try again.";
-      alert(message);
-    } finally {
+      } catch (err) {
+        console.error("Login Error:", err);
+        // console.error("Login Error:", err.response?.data || err.message);
+        const status = err.response?.status;
+        const message = err.response?.data?.message;
+        console.log("Login Error:", message , status);
+        
+        // alert(message);
+        setNotif({
+          message: message,
+          color: "red",
+          duration: 3000
+        });
+      } finally {
       setIsLoading(false);
     }
   };
@@ -102,6 +129,14 @@ const Login = () => {
       {/* Right Panel - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6">
         <div className="w-full max-w-md">
+          {/* Notification Component */}
+          {notif && (<Notification
+          message={notif.message}
+          color={notif.color}
+          duration={notif.duration}
+          onClose={() => setNotif(null)}
+        />
+      )}
           <div className="bg-neutral-800 rounded-xl shadow-2xl p-8 border border-neutral-700">
             {/* Mobile Header */}
             <div className="text-center mb-8 lg:hidden">
@@ -120,15 +155,15 @@ const Login = () => {
               {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-neutral-300 mb-2">
-                  Email
+                  Username
                 </label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" />
                   <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    placeholder="Enter your email"
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    placeholder="Enter your username"
                     onChange={handleChange}
                     required
                     className="w-full pl-10 pr-4 py-3 bg-neutral-700 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:border-transparent transition-colors"

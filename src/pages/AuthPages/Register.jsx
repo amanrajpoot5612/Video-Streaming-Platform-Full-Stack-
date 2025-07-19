@@ -9,8 +9,14 @@ import {
   EyeOff as EyeOffIcon
 } from 'lucide-react';
 import axiosInstance from '../../api/axios';
+import Notification from '../../component/Notification';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+
+  const navigate = useNavigate();
+  // State to manage form data
+  const [notify, setNotify] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
@@ -68,22 +74,19 @@ const Register = () => {
         },
       });
 
-      // Replace with actual API call:
-      // const res = await axiosInstance.post('/users/register', data, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // });
-
-      console.log('Registration success');
-      alert('User registered successfully!');
+      setNotify({
+        message: res.data.message || 'Registration successful!',
+        color: 'green',
+        duration: 3000
+      })
+      navigate('/');
 
       // Reset form
       setFormData({
         fullName: '',
         username: '',
         email: '',
-        password: '',
+        password: '', 
         avatar: null,
         coverImage: null
       });
@@ -91,7 +94,13 @@ const Register = () => {
       setCoverPreview(null);
     } catch (err) {
       console.error('Error:', err.response?.data || err.message);
-      alert('Registration failed. Please try again.');
+      setNotify({
+        message: err.response?.data?.message || 'Registration failed. Please try again.',
+        color: 'red',
+        duration: 3000  
+      })
+      // Navigate('/');
+      
     } finally {
       setIsLoading(false);
     }
@@ -125,6 +134,17 @@ const Register = () => {
       {/* Right Panel - Registration Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6">
         <div className="w-full max-w-md">
+          {/* Notification Component */}
+          {
+            notify && (
+              <Notification
+                message={notify.message}
+                color={notify.color}
+                duration={notify.duration}
+                onClose={() => setNotify(null)}
+              />
+            )
+          }
           <div className="bg-neutral-800 rounded-xl shadow-2xl p-8 border border-neutral-700">
             {/* Mobile Header */}
             <div className="text-center mb-8 lg:hidden">

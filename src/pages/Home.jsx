@@ -16,7 +16,7 @@ const Home = () => {
         <header className='fixed left-0 z-50 top-0 w-full h-16 bg-gray-700 flex justify-between space-x-4 textured-bg'>
             <Navbar/>
         </header>
-
+        
         {/* main content component */}
         <div className="content flex flex-grow h-full">
 
