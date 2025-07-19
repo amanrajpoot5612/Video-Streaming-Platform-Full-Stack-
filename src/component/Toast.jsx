@@ -1,17 +1,16 @@
-export default function Toast({ message, type = "success", duration = 3000 }) {
-    const [visible, setVisible] = useState(true);
+import React from 'react'
 
-    useEffect(() => {
-        const timer = setTimeout(() => setVisible(false), duration);
-        return () => clearTimeout(timer);
-    }, [duration]);
-
-    if (!visible) return null;
-
-    return (
-        <div className={`fixed top-5 right-5 px-4 py-2 rounded shadow-lg text-white
-            ${type === "success" ? "bg-green-600" : "bg-red-600"}`}>
-            {message}
+const Toast = () => {
+  return (
+    <div>
+        <div className="fixed bottom-4 right-4 bg-white text-black p-4 rounded-lg shadow-lg">
+            <p className="text-sm">This is a toast notification!</p>
+            <button className="mt-2 text-blue-500 hover:underline" onClick={() => console.log('Toast dismissed')}>
+                Dismiss
+            </button>
         </div>
-    );
+    </div>
+  )
 }
+
+export default Toast
