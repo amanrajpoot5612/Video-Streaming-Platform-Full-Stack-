@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 const Setting = () => {
+  const { user , logout} = useAuth();
   const [form, setForm] = useState({
-    avatar: "https://i.pravatar.cc/150?img=23",
-    name: "Aman Rajput",
-    username: "aman_dev",
-    email: "aman@example.com",
+    avatar: user.avatar,
+    name: user.fullName,
+    username: user.username,
+    email: user.email,
     password: "",
     newPassword: "",
   });

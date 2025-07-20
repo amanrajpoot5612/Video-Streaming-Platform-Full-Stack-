@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import VideoCard from './VideoCard'
-import videos from '../context/DemoData'
+// import videos from '../context/DemoData'
+import axiosInstance from '../api/axios'
 // import Spline from '@splinetool/react-spline';
 
 
@@ -8,7 +9,23 @@ import videos from '../context/DemoData'
 
 const Hero = () => {
 
-    
+    const [videos, setVideos] = useState([]);
+
+    useEffect(() => {
+        const getVideo = async () => {
+            try {
+                const res = await axiosInstance.get('/videos/get-all');
+
+                if (res?.data) {
+                    const shuffled = [...res.data].sort(() => Math.random() - 0.5)
+                    setVideos(shuffled); // ✅ your array of video objects
+                }
+            } catch (error) {
+                console.error("Error fetching videos:", error);
+            }
+        };
+        getVideo();
+    }, []);
 
     return (
         <div>

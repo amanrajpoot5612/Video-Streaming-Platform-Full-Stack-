@@ -82,7 +82,6 @@ const Login = () => {
         // console.error("Login Error:", err.response?.data || err.message);
         const status = err.response?.status;
         const message = err.response?.data?.message;
-        console.log("Login Error:", message , status);
         
         // alert(message);
         setNotif({
