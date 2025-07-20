@@ -1,6 +1,7 @@
 import React from 'react'
 import LikedVideoCard from '../../component/LikedVideoCard'
 import videos from '../../context/DemoData'
+import RenderLiked from '../Render/RenderLiked'
 
 const Liked = () => {
   return (
@@ -9,13 +10,7 @@ const Liked = () => {
     <div className="header h-full w-full bg-navbar flex items-center justify-center">
                 <h1 className='text-2xl'>Liked</h1>
             </div>
-    <div className='w-full h-full textured-bg Liked flex flex-col items-center justify-start gap-4'>
-      {videos.map((video , index) => {
-        return (
-          <LikedVideoCard video={video} key={index}/>
-        )
-      })}
-    </div>
+    <RenderLiked/>
     </div>
   )
 }

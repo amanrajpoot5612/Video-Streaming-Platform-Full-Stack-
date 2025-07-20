@@ -1,6 +1,7 @@
 import React from 'react'
 import videos from '../../context/DemoData'
 import VideoCard from '../VideoCard'
+import Render from '../Render/Render'
 
 const News = () => {
   return (
@@ -8,11 +9,7 @@ const News = () => {
       <div className='header w-full h-12 bg-navbar flex items-center justify-center'>
         <h1 className='text-2xl'>News</h1>
       </div>
-      <div className=" content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 p-4">
-                {videos.map((video, idx) => (
-                    <VideoCard key={idx} video={video} />
-                ))}
-            </div>
+      <Render></Render>
     </div>
   )
 }
