@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const ProfileDropdown = () => {
+  const { user, logout , loading} = useAuth();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef();
 
@@ -12,10 +15,11 @@ const ProfileDropdown = () => {
         setOpen(false);
       }
     }
-
+    
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  if (loading) return null;
 
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -23,11 +27,17 @@ const ProfileDropdown = () => {
         className="flex items-center gap-2 cursor-pointer rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 p-2"
         onClick={() => setOpen((prev) => !prev)}
       >
-        <img
-          src="/avatar.png" // use any placeholder or real avatar
-          alt="Profile"
-          className="w-8 h-8 rounded-full"
-        />
+        {
+          user ? (
+            <img
+              src={user?.coverImage}
+              alt="Profile"
+              className="w-8 h-8 rounded-full"
+            />
+          ) : (
+            <User className="w-8 h-8" />
+          )
+        }
         <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-300" />
       </div>
 
@@ -35,13 +45,21 @@ const ProfileDropdown = () => {
         <div className="absolute right-0 z-20 mt-2 w-44 origin-top-right rounded-md bg-white textured-bg shadow-lg ring-1 ring-black ring-opacity-5">
           <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
             <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer">
-              <User className="w-4 h-4" /> Profile
+              <Link to="/profile" className="flex items-center gap-2">
+                <User className="w-4 h-4" /> Profile
+              </Link>
             </li>
             <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer">
-              <Settings className="w-4 h-4" /> Settings
+              <Link to='/settings' className="flex items-center gap-2" >
+                <Settings className="w-4 h-4" /> Settings
+              </Link>
+              
             </li>
             <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer text-red-500">
-              <LogOut className="w-4 h-4" />
+              <Link to={'/logout'}>
+                <LogOut className="w-4 h-4" />
+              </Link>
+              
             </li>
           </ul>
         </div>

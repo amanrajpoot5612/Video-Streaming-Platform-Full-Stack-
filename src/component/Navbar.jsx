@@ -5,8 +5,12 @@ import { Bell as BellIcon,
     Bug as BugIcon,
  } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
+    
+
+
     return (
         <nav className='w-full h-16 bg-gray-700 flex justify-between space-x-4 textured-bg bg-home'>
             <div className="left flex space-x-4 items-center">

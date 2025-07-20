@@ -43,7 +43,6 @@ export default function UploadVideo() {
             const url = URL.createObjectURL(file);
             setPreview((prev) => ({ ...prev, videoURL: url }));
             
-            console.log("Video preview URL:", url);
         }
 
         if (name === "thumbnail") {
