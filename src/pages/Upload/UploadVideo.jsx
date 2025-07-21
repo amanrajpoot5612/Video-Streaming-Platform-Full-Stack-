@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import axiosInstance from "../../api/axios";
+import Navbar from "../../component/Navbar";
 
 export default function UploadVideo() {
     const [formData, setFormData] = useState({
@@ -124,8 +125,11 @@ export default function UploadVideo() {
 
 
     return (
+        <>
+        <Navbar/>
         <div className="min-h-screen bg-neutral-900 flex items-center justify-center px-4 py-10">
             <div className="w-full max-w-6xl bg-neutral-800 border border-neutral-700 rounded-xl shadow-2xl p-8">
+                
                 <h2 className="text-2xl font-bold text-white mb-8 text-center flex items-center justify-center gap-2">
                     <UploadIcon className="w-6 h-6 text-white" /> Upload New Video
                 </h2>
@@ -242,5 +246,6 @@ export default function UploadVideo() {
                 )}
             </div>
         </div>
+        </>
     );
 }
