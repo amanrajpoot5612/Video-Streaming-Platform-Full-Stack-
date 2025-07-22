@@ -78,8 +78,7 @@ function App() {
               {/* Video Player Route */}
               <Route path="/upload-test" element={<TestUpload />} />
               {/* <Route path="/video-player/:id" element={<PlayerPage />} /> */}
-              <Route path="/video-player" element={<PlayerPage />} />
-              <Route path="/video-player-demo" element={<VideoPlayer />} />
+              {/* <Route path="/video-player-demo" element={<VideoPlayer />} /> */}
 
               {/* Upload Video Route */}
               <Route path="/upload-video" element={<UploadVideo />} />
@@ -96,6 +95,8 @@ function App() {
 
                 {/* Test Route */}
                 <Route path="/test" element={<Test/>}></Route>
+
+                <Route path="/watch/:id" element={<PlayerPage />} />
 
                 {/* Catch-all route for Not Found */}
                 <Route path="*" element={<NotFound/>}></Route>
