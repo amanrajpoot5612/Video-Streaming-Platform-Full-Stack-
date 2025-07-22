@@ -9,7 +9,7 @@ import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
     
-
+    const { user , logout}  = useAuth();
 
     return (
         <nav className='w-full h-16 bg-gray-700 flex justify-between space-x-4 textured-bg bg-home'>
@@ -34,7 +34,19 @@ const Navbar = () => {
             </div>
             <div className="right flex space-x-4 items-center">
                 <div className="alerts"><BellIcon></BellIcon></div>
-                <ProfileDropdown />
+                {user ? <ProfileDropdown /> : 
+                    // <div>
+                    <>
+                        <Link to={'/register'}>
+                            <h2 className='cursor-pointer'>Register</h2>
+                        </Link>
+                        <span>/</span>
+                        <Link to={'/login'}>
+                            <h2 className='pr-2'>Login</h2>
+                        </Link>
+                        </>
+                    // </div>
+                }
             </div>
         </nav>
     )

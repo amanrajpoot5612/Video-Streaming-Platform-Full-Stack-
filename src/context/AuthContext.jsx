@@ -60,6 +60,8 @@ export const AuthProvider = ({children}) => {
             await axiosInstance.post('/users/logout', {
                 withCredentials: true
             })
+            console.log("user is null");
+            
             setUser(null);
             // setVideos([]);
         }

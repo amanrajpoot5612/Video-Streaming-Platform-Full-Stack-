@@ -1,12 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const ProfileDropdown = () => {
-  const { user, logout , loading} = useAuth();
+  const { user, setUser, Logout , loading} = useAuth();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef();
+  const navigate = useNavigate();
+
+
+  const logoutUser = () => {
+    console.log("Logout called");
+    Logout()
+    setUser(null)
+    navigate('/')
+  }
+
+  useEffect(() => {
+  }, [user])
 
   // Close dropdown if clicking outside
   useEffect(() => {
@@ -55,11 +67,10 @@ const ProfileDropdown = () => {
               </Link>
               
             </li>
-            <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer text-red-500">
-              <Link to={'/logout'}>
-                <LogOut className="w-4 h-4" />
-              </Link>
-              
+            <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer text-red-500"
+            onClick={logoutUser} 
+            >
+                <LogOut className="w-4 h-4" />  
             </li>
           </ul>
         </div>
