@@ -91,7 +91,7 @@ const ConnectWithMe = () => {
         </div>
 
         {/* Feedback Section */}
-        <div className="bg-neutral-700 rounded-xl p-8">
+        {/* <div className="bg-neutral-700 rounded-xl p-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-white mb-4 flex items-center justify-center gap-2">
               <Heart className="w-8 h-8 text-red-500" />
@@ -196,7 +196,7 @@ const ConnectWithMe = () => {
               )}
             </button>
           </form>
-        </div>
+        </div> */}
       </div>
     </div>
   );

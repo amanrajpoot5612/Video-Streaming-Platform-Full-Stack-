@@ -37,7 +37,7 @@ const Sidebar = () => {
         { name: 'Create', link: '/upload-video', icon: <VideoIcon /> },
         { name: 'Settings', link: '/settings' , icon: <SettingsIcon /> },
         { name: 'Connect with Me', link: '/help' , icon: <HandshakeIcon /> },   
-        { name: 'Know more', link: '/more' , icon: <InfoIcon /> },   
+        { name: 'Know more', link: '/showcase' , icon: <InfoIcon /> },   
     ]
 
     const [menuToggle, setMenuToggle] = useState(true)

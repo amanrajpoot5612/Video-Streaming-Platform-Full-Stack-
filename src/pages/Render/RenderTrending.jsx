@@ -29,12 +29,27 @@ const RenderTrending = () => {
         return words.slice(0, wordLimit).join(" ") + "…Read more";
     }
 
+    // const [Date, setDate] = useState(second)
+
+    const formatDate = (timestamp) => {
+        if (!timestamp) return "Unknown date";
+
+        return new Date(timestamp).toLocaleString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    };
+
+
 
     return (
         <>
-            {videos.map((video) => (
+            {videos.map((video, idx) => (
                 <div
-                    key={video.id}
+                    key={video._id}
                     className="mb-4 break-inside-avoid bg-neutral-900 rounded-xl overflow-hidden shadow-lg hover:scale-[1.01] transition-transform"
                 >
                     <Link to={`/video-player-demo`}>
@@ -48,11 +63,11 @@ const RenderTrending = () => {
 
                     <div className="p-3">
                         <p className="text-white font-semibold text-sm">{video.title}</p>
-                        <p className="text-gray-400 text-xs mt-1">{truncateWords(video.description, 30)}</p>
+                        <p className="text-gray-400 text-xs mt-1"><strong>Description:</strong> {truncateWords(video.description, 30)}</p>
                         <div className="text-xs text-gray-500 mt-1">
                             {video.owner.fullName} <br />
-                            {video.views} •
-                            {/* {video.uploaded} */}
+                            Views: {video.views} •
+                            {formatDate(video.createdAt)}
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,12 @@
 import React from 'react'
+import ConnectWithMe from '../connect/ConnectWithMe'
+
 
 const Help = () => {
   return (
-    <div>Help</div>
+    <div>
+      <ConnectWithMe/>
+    </div>
   )
 }
 
