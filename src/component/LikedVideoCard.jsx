@@ -1,7 +1,7 @@
 import React from "react";
 
 const LikedVideoCard = ({ video }) => {
-    console.log(`video data in Likedvideocard : ${video.views}`);
+    // console.log(`video data in Likedvideocard : ${video.views}`);
     
     const title = video.title || "Sample Video Title";
     const description = video.description || "This is a sample video description.";

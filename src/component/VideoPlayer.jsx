@@ -110,8 +110,8 @@ const VideoPlayer = ({video}) => {
   useEffect(() => {
     if(video){
       setVideoData(video);
-      console.log(`video: ${video}`);
-    console.log(`video _id: ${video?._id}`);
+      // console.log(`video: ${video}`);
+    // console.log(`video _id: ${video?._id}`);
     }
     
   }, [video])

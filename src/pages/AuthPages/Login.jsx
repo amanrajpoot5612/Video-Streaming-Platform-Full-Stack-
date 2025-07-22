@@ -69,7 +69,7 @@ const Login = () => {
         setIsLoading(false);
         navigate('/'); // Fixed: was navigator, now navigate
         let userInfo = res.data.data.user
-        console.log(`user is : ${userInfo}`);
+        // console.log(`user is : ${userInfo}`);
         setUser(userInfo)
       } else {
         // alert("Login failed. Please check your credentials.");

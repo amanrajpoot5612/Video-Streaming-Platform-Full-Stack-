@@ -11,7 +11,7 @@ const ProfileDropdown = () => {
 
 
   const logoutUser = () => {
-    console.log("Logout called");
+    // console.log("Logout called");
     Logout()
     setUser(null)
     navigate('/')
