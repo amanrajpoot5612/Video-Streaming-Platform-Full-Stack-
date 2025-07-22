@@ -17,7 +17,9 @@ import {
   Award as AwardIcon,
   Star as StarIcon,
   MonitorPlay as MonitorPlayIcon,
-  VideoIcon
+  VideoIcon,
+  Handshake as HandshakeIcon,
+  Info as InfoIcon
 } from "lucide-react";
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
@@ -28,13 +30,14 @@ const Sidebar = () => {
         { name: 'Movies', link: '/movies', icon: <MonitorPlayIcon /> },
         { name: 'News', link: '/news' ,icon : <NewspaperIcon /> },
         { name: 'Sports', link: '/sports', icon: <AwardIcon /> },
-        { name: 'Shorts and Clips', link: '/shorts', icon: <ThumbsUpIcon /> },
+        // { name: 'Shorts and Clips', link: '/shorts', icon: <ThumbsUpIcon /> },
         { name: 'History', link: '/history', icon: <HistoryIcon /> },
         { name: 'Liked', link: '/liked' , icon: <HeartIcon /> },
         { name: 'Subscription', link: '/subscription', icon: <UserIcon /> },
         { name: 'Create', link: '/upload-video', icon: <VideoIcon /> },
         { name: 'Settings', link: '/settings' , icon: <SettingsIcon /> },
-        { name: 'Help and Feeedback', link: '/help' , icon: <HelpCircleIcon /> },   
+        { name: 'Connect with Me', link: '/help' , icon: <HandshakeIcon /> },   
+        { name: 'Know more', link: '/more' , icon: <InfoIcon /> },   
     ]
 
     const [menuToggle, setMenuToggle] = useState(true)

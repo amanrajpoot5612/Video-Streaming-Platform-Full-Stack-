@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize, SkipBack, SkipForward, Settings } from 'lucide-react';
 
-const VideoPlayer = () => {
+const VideoPlayer = ({video}) => {
   const videoRef = useRef(null);
   const progressRef = useRef(null);
   const volumeRef = useRef(null);
@@ -15,6 +15,8 @@ const VideoPlayer = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [isBuffering, setIsBuffering] = useState(false);
+
+  const [videoData, setVideoData] = useState(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -105,6 +107,32 @@ const VideoPlayer = () => {
   const progressPercentage = duration ? (currentTime / duration) * 100 : 0;
   const volumePercentage = volume * 100;
 
+  useEffect(() => {
+    if(video){
+      setVideoData(video);
+      console.log(`video: ${video}`);
+    console.log(`video _id: ${video?._id}`);
+    }
+    
+  }, [video])
+
+  const formatDate = (timestamp) => {
+  if (!timestamp) return "Unknown date";
+
+  return new Date(timestamp).toLocaleString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+
+  if(!videoData){
+    return <div>Can't access now</div>
+  }
+
   return (
     <div className="relative w-full max-w-4xl mx-auto bg-black rounded-lg overflow-hidden shadow-2xl">
       {/* Video Element */}
@@ -117,7 +145,7 @@ const VideoPlayer = () => {
         <video
           ref={videoRef}
           className="w-full h-full object-contain"
-          src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+          src={videoData?.videoFile}
           onEnded={() => setIsPlaying(false)}
         />
         
@@ -252,10 +280,10 @@ const VideoPlayer = () => {
       </div>
       {/* Video Title and Description */}
       <div className="p-4 textured-bg bg-sidebar text-white rounded-b-lg font-serif">
-        <h3 className="text-lg font-semibold mb-1">Big Buck Bunny</h3>
-        <p className="text-sm text-gray-400">A short animated film about a big, friendly bunny.</p>
+        <h3 className="text-lg font-semibold mb-1">{videoData.title}</h3>
+        <p className="text-sm text-gray-400">{videoData.description}</p>
         <div className="text-xs text-gray-500 mt-2">
-          <span>Channel Name</span> • <span>1M views</span> • <span>1 day ago</span>
+          <span>{videoData.owner?.fullName}</span> • <span><strong>Views: </strong>{videoData.views}</span> • <span>{formatDate(videoData.createdAt)}</span>
           </div>
           </div>
       {/* End of Video Title and Description */}
