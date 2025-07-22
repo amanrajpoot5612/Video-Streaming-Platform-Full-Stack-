@@ -5,8 +5,6 @@ const trendingData = [
   {
     id: 1,
     src: "video1.mp4",
-    width: "w-[32rem]",
-    height: "h-[24rem]",
     title: "Big Video Title",
     description: "Description for video 1",
     thumbnail: thumbnail,

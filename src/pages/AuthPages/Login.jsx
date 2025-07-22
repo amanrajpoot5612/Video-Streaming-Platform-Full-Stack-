@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 // Add this import
 import axiosInstance from '../../api/axios';
 import Notification from '../../component/Notification';
+import { useAuth } from '../../context/AuthContext';
+import DemoBanner from '../Banner/DemoBanner';
 
 const Login = () => {
+  const {user, setUser, logout} = useAuth();
   const [formData, setFormData] = useState({
     username: '', // Changed from username to email to match your form
     password: ''
@@ -65,6 +68,9 @@ const Login = () => {
       });
         setIsLoading(false);
         navigate('/'); // Fixed: was navigator, now navigate
+        let userInfo = res.data.data.user
+        console.log(`user is : ${userInfo}`);
+        setUser(userInfo)
       } else {
         // alert("Login failed. Please check your credentials.");
           setNotif({
@@ -76,7 +82,6 @@ const Login = () => {
 
       // Reset form fields
       setFormData({ username: "", password: "" });
-
       } catch (err) {
         console.error("Login Error:", err);
         // console.error("Login Error:", err.response?.data || err.message);
@@ -95,6 +100,9 @@ const Login = () => {
   };
 
   return (
+    <>
+      {/* <div className='info-card h-6 w-full bg-amber-100 text-red-500 font-extrabold'>Hello, test</div> */}
+      <DemoBanner/>
     <div className="min-h-screen bg-neutral-900 flex">
       {/* Left Panel - Welcome Section */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-neutral-800 to-neutral-900 items-center justify-center p-12">
@@ -278,6 +286,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
