@@ -8,8 +8,14 @@ import {
 import { useState, useRef, useEffect } from "react";
 import axiosInstance from "../../api/axios";
 import Navbar from "../../component/Navbar";
+import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
+
 
 export default function UploadVideo() {
+
+    const {user} = useAuth();
+
     const [formData, setFormData] = useState({
         video: null,
         thumbnail: null,
@@ -123,11 +129,41 @@ export default function UploadVideo() {
   }
 };
 
+    // if(!user){
+    //     return <div className="text-center mt-10 text-gray-500">
+    //         <h2 className='mb-2 '>Register or Login before uploadng video</h2>
+    //         <Link to={'/register'}>
+    //             <span className='p-2 m-2 cursor-pointer rounded-sm hover:bg-red-400 hover:text-amber-50 bg-red-300'>Register</span>
+    //         </Link>
+    //         <span>/</span>
+    //         <Link to={'/login'}>
+    //             <span className='p-2 m-2 rounded-sm hover:bg-red-400 hover:text-amber-50 bg-red-300'>Login</span>
+    //         </Link>
+    //     </div>
+    // }
+
 
     return (
         <>
-        <Navbar/>
+        <nav className="text-amber-50">
+            <Navbar/>
+        </nav>
         <div className="min-h-screen bg-neutral-900 flex items-center justify-center px-4 py-10">
+            {!user?
+                <div className="text-center mt-10 text-gray-700 font-[500]">
+            <h2 className='mb-2 '>Register or Login before uploadng video</h2>
+            <Link to={'/register'}>
+                <span className='p-2 m-2 cursor-pointer rounded-sm hover:bg-red-400 hover:text-amber-50 bg-red-300'>Register</span>
+            </Link>
+            <span>/</span>
+            <Link to={'/login'}>
+                <span className='p-2 m-2 rounded-sm hover:bg-red-400 hover:text-amber-50 bg-red-300'>Login</span>
+            </Link>
+        </div>
+            :
+
+
+            
             <div className="w-full max-w-6xl bg-neutral-800 border border-neutral-700 rounded-xl shadow-2xl p-8">
                 
                 <h2 className="text-2xl font-bold text-white mb-8 text-center flex items-center justify-center gap-2">
@@ -245,6 +281,7 @@ export default function UploadVideo() {
                     </div>
                 )}
             </div>
+}
         </div>
         </>
     );
