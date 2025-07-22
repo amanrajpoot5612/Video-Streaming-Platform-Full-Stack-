@@ -50,7 +50,7 @@ const RenderTrending = () => {
                         <p className="text-white font-semibold text-sm">{video.title}</p>
                         <p className="text-gray-400 text-xs mt-1">{truncateWords(video.description, 30)}</p>
                         <div className="text-xs text-gray-500 mt-1">
-                            {video.owner} <br />
+                            {video.owner.fullName} <br />
                             {video.views} •
                             {/* {video.uploaded} */}
                         </div>

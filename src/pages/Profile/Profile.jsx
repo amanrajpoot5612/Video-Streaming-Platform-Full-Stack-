@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axiosInstance from '../../api/axios'
+import { Link } from 'react-router-dom';
 // import { useAuth } from '../../context/AuthContext'
+
 
 const Profile = () => {
 
@@ -38,9 +40,18 @@ const Profile = () => {
         return <div className="text-center mt-10 text-gray-500">Loading user profile...</div>;
     }
 
-    // if (!user) {
-    //     return <div className="text-center mt-10 text-gray-500">Loading user profile...</div>
-    // }
+    if (!user) {
+        return <div className="text-center mt-10 text-gray-500">
+            <h2 className='mb-2 '>Register or Login before accessing profile</h2>
+            <Link to={'/register'}>
+                <span className='p-2 m-2 cursor-pointer rounded-sm hover:bg-red-400 hover:text-amber-50 bg-red-300'>Register</span>
+            </Link>
+            <span>/</span>
+            <Link to={'/login'}>
+                <span className='p-2 m-2 rounded-sm hover:bg-red-400 hover:text-amber-50 bg-red-300'>Login</span>
+            </Link>
+        </div>
+    }
 
 
     return (
