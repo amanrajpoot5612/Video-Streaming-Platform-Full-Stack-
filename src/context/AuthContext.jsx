@@ -34,11 +34,6 @@ export const AuthProvider = ({children}) => {
       withCredentials: true,
     });
 
-    // console.log("✅ Full response from backend:", response.data);
-    // console.log("📦 response.data.data:", response.data?.data);
-    // console.log("👤 response.data.data.user:", response.data?.data?.user);
-    // console.log("👤 username 1:", response.data?.data.username);
-
     setUser(response.data?.data); // This should be the full user object like {username, avatar, ...}
 
   } catch (error) {
@@ -60,7 +55,7 @@ export const AuthProvider = ({children}) => {
             await axiosInstance.post('/users/logout', {
                 withCredentials: true
             })
-            // console.log("user is null");
+            // ("user is null");
             
             setUser(null);
             // setVideos([]);

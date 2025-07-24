@@ -18,8 +18,8 @@ const Hero = () => {
 
                 if (res?.data) {
                     const shuffled = [...res.data].sort(() => Math.random() - 0.5)
-                    // console.log(`video.videoFile: ${shuffled[0].videoFile}`);
-                    // console.log(`shuffled[0]._id: ${shuffled[0]._id}`);
+                    // (`video.videoFile: ${shuffled[0].videoFile}`);
+                    // 0]._id: ${shuffled[0]._id}`);
                     
                     setVideos(shuffled); // ✅ your array of video objects
                 }

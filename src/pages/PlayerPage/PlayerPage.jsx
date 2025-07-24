@@ -15,11 +15,11 @@ const PlayerPage = () => {
         const res = await axiosInstance(`/videos/watch/${id}`)
 
 
-        // console.log("✅ Full URL being hit:", `/videos/watch/${id}`);
-        // console.log("📦 Response data:", res.data);
-        // console.log("📦 Response data data:", res.data?.data);
-        // console.log("📦 Response data data _id:", res.data?.data?._id);
-        // console.log("📦 Response data data videoFile:", res.data?.data?.videoFile);
+        // L being hit:", `/videos/watch/${id}`);
+        // se data:", res.data);
+        // ("📦 Response data data:", res.data?.data);
+        // se data data _id:", res.data?.data?._id);
+        // se data data videoFile:", res.data?.data?.videoFile);
 
         
         setVideo(res.data?.data)

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 
 const VideoCard = ({video}) => {
-  // console.log(`Video id in video card: ${video._id}`);
+  // in video card: ${video._id}`);
 
   const formattedDate = new Date(video?.createdAt).toLocaleString("en-IN", {
   day: "numeric",

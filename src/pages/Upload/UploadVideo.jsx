@@ -91,7 +91,7 @@ export default function UploadVideo() {
         setToast({ message: "Please fill all fields and upload files.", type: "error" });
         return;
     }
-    // console.log("Submitting form data:", { video, thumbnail, title, description, duration });
+    // g form data:", { video, thumbnail, title, description, duration });
     
   const data = new FormData();
   data.append("videoFile", video || null);
@@ -109,7 +109,7 @@ export default function UploadVideo() {
         throw new Error("Upload failed");
     }
     setToast({ message: "Upload successful!", type: "success" });
-    // console.log("Upload response:", res.data);
+    // sponse:", res.data);
     setTimeout(() => {
         setToast({ message: "wait for few seconds", type: "wait" }); 
     } , 3000);
