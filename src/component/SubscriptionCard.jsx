@@ -17,6 +17,8 @@
             src={avatar}
             alt={channelName}
             className="w-12 h-12 rounded-full object-cover"
+            loading="lazy" 
+
             />
             <span className="text-md font-medium text-gray-800 dark:text-white">
             {channelName}

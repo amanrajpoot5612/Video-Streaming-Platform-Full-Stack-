@@ -1,8 +1,7 @@
 import React from "react";
+import { optimizeCloudinaryUrl } from "../utils/Cloudinary";
 
 const LikedVideoCard = ({ video }) => {
-    // console.log(`video data in Likedvideocard : ${video.views}`);
-    
     const title = video.title || "Sample Video Title";
     const description = video.description || "This is a sample video description.";
     const thumbnail = video.thumbnail || "https://via.placeholder.com/150";
@@ -25,15 +24,20 @@ const LikedVideoCard = ({ video }) => {
         return words.slice(0, wordLimit).join(" ") + "…Read more";
     }
 
+
+    const optimizedThumb = optimizeCloudinaryUrl(video.thumbnail, 286, 146);
+
     return (
         <div className="flex w-full max-w-3xl h-32 bg-white bg-navbar rounded-xl shadow-md overflow-hidden border dark:border-gray-700">
 
             {/* Thumbnail */}
             <div className="w-1/2 h-full">
                 <img
-                    src={thumbnail}
+                    src={optimizedThumb}
                     alt="Video Thumbnail"
                     className="object-cover w-full h-full"
+                    loading="lazy" 
+
                 />
             </div>
 

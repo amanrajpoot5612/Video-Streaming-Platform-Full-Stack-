@@ -1,6 +1,7 @@
 import React from 'react'
 import sign from '../assets/sign.jpg'
 import { Link } from 'react-router-dom'
+import { optimizeCloudinaryUrl } from '../utils/Cloudinary'
 
 
 const VideoCard = ({video}) => {
@@ -20,12 +21,14 @@ const VideoCard = ({video}) => {
         if (words.length <= wordLimit) return text;
         return words.slice(0, wordLimit).join(" ") + "…Read more";
     }
+
+    const optimizedThumb = optimizeCloudinaryUrl(video.thumbnail, 286, 146);
   
   return (
     <div className="card rounded-lg overflow-hidden shadow-md bg-neutral-900 cursor-pointer hover:scale-[1.02] transition-transform duration-200">
       <div className="relative w-full aspect-video bg-gray-700">
         <Link to={`/watch/${video._id}`}>
-          <img src={video.thumbnail} alt="Thumbnail" className="w-full h-full object-cover" />
+          <img src={optimizedThumb} alt="Thumbnail" className="w-full h-full object-cover" />
         </Link>
       </div>
       <div className="p-3 flex gap-3">

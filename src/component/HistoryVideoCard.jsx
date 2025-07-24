@@ -1,4 +1,5 @@
 import React from "react";
+import { optimizeCloudinaryUrl } from "../utils/Cloudinary";
 
 const HistoryVideoCard = ({ video }) => {
     const title = video.title || "Sample Video Title";
@@ -8,15 +9,19 @@ const HistoryVideoCard = ({ video }) => {
     const avatar = video.channelAvatar || "https://via.placeholder.com/50";
     const views = video.views || "1M views";
     const uploaded = video.uploaded || "1 day ago";
+
+    const optimizedThumb = optimizeCloudinaryUrl(video.thumbnail, 286, 146);
     return (
         <div className="flex w-full max-w-3xl h-32 bg-white bg-navbar rounded-xl shadow-md overflow-hidden border dark:border-gray-700">
             
             {/* Thumbnail */}
             <div className="w-1/2 h-full">
                 <img
-                    src={thumbnail}
+                    src={optimizedThumb}
                     alt="Video Thumbnail"
                     className="object-cover w-full h-full"
+                    loading="lazy" 
+
                 />
             </div>
 

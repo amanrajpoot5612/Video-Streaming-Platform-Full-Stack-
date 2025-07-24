@@ -11,7 +11,6 @@ const ProfileDropdown = () => {
 
 
   const logoutUser = () => {
-    // console.log("Logout called");
     Logout()
     setUser(null)
     navigate('/')
@@ -45,6 +44,8 @@ const ProfileDropdown = () => {
               src={user?.coverImage}
               alt="Profile"
               className="w-8 h-8 rounded-full"
+              loading="lazy" 
+
             />
           ) : (
             <User className="w-8 h-8" />

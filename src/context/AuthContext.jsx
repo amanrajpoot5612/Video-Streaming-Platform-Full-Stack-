@@ -37,7 +37,7 @@ export const AuthProvider = ({children}) => {
     setUser(response.data?.data); // This should be the full user object like {username, avatar, ...}
 
   } catch (error) {
-    console.error("❌ Error fetching user:", error);
+    console.log("Login first", error);
     setUser(null);
   } finally {
     setLoading(false);
