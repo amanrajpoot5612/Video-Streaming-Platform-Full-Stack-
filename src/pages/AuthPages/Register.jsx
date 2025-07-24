@@ -11,6 +11,7 @@ import {
 import axiosInstance from '../../api/axios';
 import Notification from '../../component/Notification';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const Register = () => {
 
@@ -30,6 +31,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [coverPreview, setCoverPreview] = useState(null);
+  const {user , setUser} = useAuth()
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -92,6 +94,10 @@ const Register = () => {
       });
       setAvatarPreview(null);
       setCoverPreview(null);
+      console.log(`res : ${res}`);
+      console.log(`res.data : ${res.data}`);
+      
+      // setUser()
     } catch (err) {
       console.error('Error:', err.response?.data || err.message);
       setNotify({
