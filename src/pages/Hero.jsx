@@ -10,6 +10,7 @@ import axiosInstance from '../api/axios'
 const Hero = () => {
 
     const [videos, setVideos] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const getVideo = async () => {
@@ -26,9 +27,18 @@ const Hero = () => {
             } catch (error) {
                 console.error("Error fetching videos:", error);
             }
+            finally {
+        setLoading(false);
+            }
         };
         getVideo();
     }, []);
+
+
+    if (loading) {
+  return <div className="p-4 text-center">Loading videos…</div>;
+}
+
 
     return (
         <div>
