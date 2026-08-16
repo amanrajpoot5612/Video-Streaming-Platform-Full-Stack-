@@ -1,9 +1,3 @@
-import React from 'react'
+const Shorts = () => <section className="bugsy-empty-state"><h2>Shorts are on the way</h2><p>Short-form playback will live here without pulling focus from the main video library.</p></section>;
 
-const Shorts = () => {
-  return (
-    <div>Shorts</div>
-  )
-}
-
-export default Shorts
+export default Shorts;

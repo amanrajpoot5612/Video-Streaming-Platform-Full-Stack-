@@ -38,7 +38,7 @@ const DarkLayout = ({ children }) => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-[#0e0e0e] to-[#1a1a1a] text-white">
+    <div className="relative min-h-screen text-white" style={{ background: "var(--canvas)" }}>
       <div className="relative z-10 max-w-7xl mx-auto">
         {children}
       </div>

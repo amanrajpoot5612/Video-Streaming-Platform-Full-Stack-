@@ -1,17 +1,5 @@
-import React from 'react'
-import videos from '../../context/DemoData'
-import VideoCard from '../VideoCard'
-import Render from '../Render/Render'
+import Render from "../Render/Render";
 
-const Sports = () => {
-  return (
-    <div className='w-full h-full textured-bg'>
-      <div className='header w-full h-12 bg-navbar flex items-center justify-center'>
-        <h1 className='text-2xl'>Sports</h1>
-      </div>
-      <Render/>
-    </div>
-  )
-}
+const Sports = () => <section className="category-page"><header className="category-page__header"><div><span className="bugsy-eyebrow">Discover</span><h1 className="bugsy-page-title">Sports</h1><p className="bugsy-page-subtitle">Highlights, analysis, and the stories behind the score.</p></div></header><Render /></section>;
 
-export default Sports
+export default Sports;

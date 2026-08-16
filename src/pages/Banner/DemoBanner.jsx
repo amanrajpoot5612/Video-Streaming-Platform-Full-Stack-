@@ -2,47 +2,29 @@ import { useState } from "react";
 
 const CopyButton = ({ text, label }) => {
   const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
+  const copy = async () => {
+    await navigator.clipboard?.writeText(text);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1600);
   };
-
-  return (
-    <button
-      onClick={handleCopy}
-      className="ml-2 px-2 py-1 text-xs border border-yellow-400 rounded hover:bg-yellow-200 dark:hover:bg-yellow-100 transition"
-    >
-      {copied ? "Copied!" : `Copy ${label}`}
-    </button>
-  );
+  return <button type="button" className="bugsy-btn bugsy-btn--subtle bugsy-btn--compact" onClick={copy}>{copied ? "Copied" : `Copy ${label}`}</button>;
 };
 
 const DemoBanner = () => {
   const [visible, setVisible] = useState(true);
-
   if (!visible) return null;
 
   return (
-    <div className="bg-amber-100 text-red-500 px-6 py-4 flex flex-col sm:flex-row justify-between items-center border-b border-yellow-300">
-      <div className="text-sm sm:text-base font-medium text-center sm:text-left flex flex-col sm:flex-row items-center gap-2">
-        <p>
-          <span className="font-semibold">Demo Account <span className="text-red-600">(Use these credentials for faster access)</span>:</span> Email: <span className="font-mono">Aman56123</span>
-        </p>
-        <CopyButton text="Aman56123" label="Username" />
-        <p>
-          Password: <span className="font-mono">Aman56123</span>
-        </p>
-        <CopyButton text="Aman56123" label="Password" />
+    <aside className="demo-banner" aria-label="Demo account details">
+      <div className="demo-banner__copy">
+        <strong>Demo account</strong>
+        <span>Username <code>Aman56123</code></span>
+        <CopyButton text="Aman56123" label="username" />
+        <span>Password <code>Aman56123</code></span>
+        <CopyButton text="Aman56123" label="password" />
       </div>
-      <button
-        onClick={() => setVisible(false)}
-        className="mt-2 sm:mt-0 text-sm px-3 py-1 border border-yellow-400 rounded hover:bg-yellow-200 dark:hover:bg-yellow-100 transition"
-      >
-        Hide
-      </button>
-    </div>
+      <button type="button" className="bugsy-btn bugsy-btn--subtle bugsy-btn--compact" onClick={() => setVisible(false)}>Hide</button>
+    </aside>
   );
 };
 

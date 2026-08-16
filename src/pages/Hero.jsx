@@ -1,57 +1,94 @@
-import React, { useEffect, useState } from 'react'
-import VideoCard from './VideoCard'
-// import videos from '../context/DemoData'
-import axiosInstance from '../api/axios'
-// import Spline from '@splinetool/react-spline';
+import { useEffect, useMemo, useState } from "react";
+import axiosInstance from "../api/axios";
+import VideoCard from "./VideoCard";
 
-
-
+const categories = ["For you", "Music", "Gaming", "Design", "Coding", "News", "Sports", "Documentaries"];
 
 const Hero = () => {
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState("For you");
 
-    const [videos, setVideos] = useState([]);
-    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    let isMounted = true;
 
-    useEffect(() => {
-        const getVideo = async () => {
-            try {
-                const res = await axiosInstance.get('/videos/get-all');
+    const getVideos = async () => {
+      try {
+        const response = await axiosInstance.get("/videos/get-all");
+        const items = Array.isArray(response?.data) ? response.data : response?.data?.data || [];
 
-                if (res?.data) {
-                    const shuffled = [...res.data].sort(() => Math.random() - 0.5)
-                    // (`video.videoFile: ${shuffled[0].videoFile}`);
-                    // 0]._id: ${shuffled[0]._id}`);
-                    
-                    setVideos(shuffled); // ✅ your array of video objects
-                }
-            } catch (error) {
-                console.error("Error fetching videos:", error);
-            }
-            finally {
-        setLoading(false);
-            }
-        };
-        getVideo();
-    }, []);
+        if (isMounted) {
+          setVideos([...items].sort(() => Math.random() - 0.5));
+        }
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
 
+    getVideos();
+    return () => { isMounted = false; };
+  }, []);
 
-    if (loading) {
-  return <div className="p-4 text-center">Loading videos…</div>;
-}
+  const continuedVideos = useMemo(() => videos.slice(0, 2), [videos]);
 
-
-    return (
+  return (
+    <section className="bugsy-page home-feed" aria-labelledby="home-title">
+      <div className="bugsy-page-head">
         <div>
-            {/* <div className="landing w-full h-screen bg-green-800 opacity-35">
-                <Spline scene="https://prod.spline.design/U7xdJi2ZulD8a3NM/scene.splinecode" />
-            </div> */}
-            <div className=" content grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 p-4">
-                {videos.map((video, _id) => (
-                    <VideoCard key={_id} video={video} />
-                ))}
-            </div>
+          <span className="bugsy-eyebrow">Discover</span>
+          <h1 id="home-title">Home</h1>
         </div>
-    )
-}
+      </div>
 
-export default Hero
+      <div className="home-feed__chips" role="tablist" aria-label="Video categories">
+        {categories.map((category) => (
+          <button
+            key={category}
+            type="button"
+            role="tab"
+            aria-selected={activeCategory === category}
+            className={`bugsy-chip${activeCategory === category ? " is-active" : ""}`}
+            onClick={() => setActiveCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div className="bugsy-loading-grid" aria-label="Loading videos">
+          {Array.from({ length: 8 }, (_, index) => <div className="bugsy-skeleton" key={index} />)}
+        </div>
+      ) : videos.length === 0 ? (
+        <div className="bugsy-empty-state">
+          <h2>Your feed is ready for its first video</h2>
+          <p>When videos are available from your backend, recommendations and recent uploads will appear here.</p>
+        </div>
+      ) : (
+        <>
+          {continuedVideos.length > 0 && (
+            <section aria-labelledby="continue-watching">
+              <h2 id="continue-watching" className="bugsy-section-title">Continue watching</h2>
+              <div className="continue-rail">
+                {continuedVideos.map((video, index) => (
+                  <VideoCard key={video._id || `${video.title}-${index}`} video={video} progress={index === 0 ? 63 : 28} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          <section aria-labelledby="recommended-videos">
+            <h2 id="recommended-videos" className="bugsy-section-title">Recommended for you</h2>
+            <div className="video-grid">
+              {videos.map((video, index) => <VideoCard key={video._id || `${video.title}-${index}`} video={video} />)}
+            </div>
+          </section>
+        </>
+      )}
+    </section>
+  );
+};
+
+export default Hero;

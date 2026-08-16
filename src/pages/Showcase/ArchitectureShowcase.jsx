@@ -21,10 +21,10 @@ const ArchitectureShowcase = () => {
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 p-5">
-            <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div className="showcase-page p-5">
+            <div className="showcase-page__panel max-w-6xl mx-auto rounded-2xl shadow-2xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white p-8 text-center">
+                <div className="showcase-page__header p-8 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-2">
                         🎬 Video Streaming Platform
                     </h1>

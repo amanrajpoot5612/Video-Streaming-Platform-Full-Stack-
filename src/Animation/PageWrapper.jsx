@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 
+const MotionDiv = motion.div;
+
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -8,7 +10,7 @@ const pageVariants = {
 
   
 const PageWrapper = ({ children }) => (
-  <motion.div
+  <MotionDiv
     initial="initial"
     animate="animate"
     exit="exit"
@@ -16,7 +18,7 @@ const PageWrapper = ({ children }) => (
     transition={{ duration: 0.5 }}
   >
     {children}
-  </motion.div>
+  </MotionDiv>
 );
 
 export default PageWrapper;

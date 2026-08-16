@@ -1,37 +1,26 @@
-import React, { useEffect, useState } from 'react'
-// import videos from '../../context/DemoData'
-// import VideoCard from '../VideoCard'
-import axiosInstance from '../../api/axios'
-import LikedVideoCard from '../../component/LikedVideoCard'
+import { useEffect, useState } from "react";
+import axiosInstance from "../../api/axios";
+import LikedVideoCard from "../../component/LikedVideoCard";
+
 const RenderLiked = () => {
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const [videos, setVideos] = useState([])
+  useEffect(() => {
+    let isMounted = true;
+    axiosInstance.get("/videos/get-all")
+      .then((response) => {
+        const items = Array.isArray(response?.data) ? response.data : response?.data?.data || [];
+        if (isMounted) setVideos([...items].sort(() => Math.random() - 0.5));
+      })
+      .catch((error) => console.error("Error fetching videos:", error))
+      .finally(() => isMounted && setLoading(false));
+    return () => { isMounted = false; };
+  }, []);
 
-    useEffect(() => {
-        const getVideo = async () => {
-            try {
-                const res = await axiosInstance.get('/videos/get-all');
+  if (loading) return <div className="bugsy-loading-grid"><div className="bugsy-skeleton" style={{ gridColumn: "1 / -1", minHeight: 220 }} /></div>;
+  if (!videos.length) return <div className="bugsy-empty-state"><h2>No saved videos yet</h2><p>Videos you like will appear in this list.</p></div>;
+  return <div className="media-list">{videos.map((video, index) => <LikedVideoCard key={video._id || index} video={video} />)}</div>;
+};
 
-                if (res?.data) {
-                    const shuffled = [...res.data].sort(() => Math.random() - 0.5)
-                    setVideos(shuffled); // ✅ your array of video objects
-                }
-            } catch (error) {
-                console.error("Error fetching videos:", error);
-            }
-        };
-        getVideo();
-    }, []);
-
-    return (
-        <>
-            <div className='w-full h-full textured-bg Liked flex flex-col items-center justify-start gap-4'>
-                {videos.map((video, idx) => (
-                    <LikedVideoCard key={idx} video={video} />
-                ))}
-            </div>
-        </>
-    )
-}
-
-export default RenderLiked
+export default RenderLiked;

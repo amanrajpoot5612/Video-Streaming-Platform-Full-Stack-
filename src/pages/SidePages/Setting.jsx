@@ -1,232 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
+import { Save } from "lucide-react";
+import { useAuth } from "../../context/auth-context";
+import thumbnailFallback from "../../assets/thumbnail.jpeg";
 
 const Setting = () => {
-  const { user, logout, loading } = useAuth();
-  const [form, setForm] = useState({
-    avatar: null,
-    fullName: '',
-    username: '',
-    email: '',
-    password: '',
-    newPassword: '',
-  });
+  const { user, loading } = useAuth();
+  const [form, setForm] = useState({ fullName: "", username: "", email: "", password: "", newPassword: "" });
 
   useEffect(() => {
-    if (user) {
-    setForm({
-      avatar: user.avatar,
-      fullName: user.fullName,
-      username: user.username,
-      email: user.email,
-      password: "",
-      newPassword: "",
-    })}
+    setForm({ fullName: user?.fullName || "", username: user?.username || "", email: user?.email || "", password: "", newPassword: "" });
+  }, [user]);
 
-    if (!user) {
-    setForm({
-      avatar: null,
-      fullName: '',
-      username: '',
-      email: '',
-      password: "",
-      newPassword: "",
-    })}
-  }, [user]) 
-
-  
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const save = (event) => {
+    event.preventDefault();
+    alert("Profile update ready to connect to your settings API.");
   };
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    alert("Profile updated!");
-    // Integrate with backend API later
-  };
-
-  // if (loading) {
-  //   return <div className="min-h-screen bg-home textured-bg p-6">
-  //     <div className="max-w-3xl mx-auto bg-white textured-bg bg-sidebar rounded-xl shadow-lg p-6 border dark:border-gray-700">
-
-  //       {/* Heading */}
-  //       <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Account Settings</h1>
-
-  //       {/* Profile Picture */}
-  //       <div className="flex items-center gap-4 mb-6">
-  //         <img
-  //           src={form.avatar}
-  //           alt="avatar"
-  //           className="w-16 h-16 rounded-full object-cover"
-  //         />
-  //         <button className="px-4 py-2 bg-sidebar text-white rounded-md hover:opacity-90 transition">
-  //           Change Avatar
-  //         </button>
-  //       </div>
-
-  //       {/* Form */}
-  //       <form onSubmit={handleSave} className="space-y-4">
-  //         {/* Name */}
-  //         <div>
-  //           <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-  //             Name
-  //           </label>
-  //           <input
-  //             type="text"
-  //             name="fullName"
-  //             value={form.fullName}
-  //             onChange={handleChange}
-  //             className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-  //           />
-  //         </div>
-
-  //         {/* Username */}
-  //         <div>
-  //           <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-  //             Username
-  //           </label>
-  //           <input
-  //             type="text"
-  //             name="username"
-  //             value={form.username}
-  //             onChange={handleChange}
-  //             className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-  //           />
-  //         </div>
-
-  //         {/* Email / Phone */}
-  //         <div>
-  //           <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-  //             Email or Phone
-  //           </label>
-  //           <input
-  //             type="email"
-  //             name="email"
-  //             // value={form.email}
-  //             onChange={handleChange}
-  //             className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-  //           />
-  //         </div>
-
-
-  //         {/* Save Button */}
-  //         <div className="pt-4">
-  //           <button
-  //             type="submit"
-  //             className="px-6 py-2 bg-sidebar text-white rounded-md hover:opacity-90 transition"
-  //           >
-  //             Save Changes
-  //           </button>
-  //         </div>
-  //       </form>
-  //     </div>
-  //   </div>
-  // }
+  if (loading) return <div className="bugsy-loading-grid"><div className="bugsy-skeleton" style={{ gridColumn: "1 / -1", minHeight: 340 }} /></div>;
 
   return (
-    <div className="min-h-screen bg-home textured-bg p-6">
-      <div className="max-w-3xl mx-auto bg-white textured-bg bg-sidebar rounded-xl shadow-lg p-6 border dark:border-gray-700">
-
-        {/* Heading */}
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Account Settings</h1>
-
-        {/* Profile Picture */}
-        <div className="flex items-center gap-4 mb-6">
-          <img
-            src={form.avatar}
-            alt="avatar"
-            className="w-16 h-16 rounded-full object-cover"
-          />
-          <button className="px-4 py-2 bg-sidebar text-white rounded-md hover:opacity-90 transition">
-            Change Avatar
-          </button>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSave} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-              Name
-            </label>
-            <input
-              type="text"
-              name="fullName"
-              value={form.fullName}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-            />
-          </div>
-
-          {/* Username */}
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-              Username
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-            />
-          </div>
-
-          {/* Email / Phone */}
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-              Email or Phone
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-            />
-          </div>
-
-          {/* Current Password */}
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-              Current Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-            />
-          </div>
-
-          {/* New Password */}
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-300 dark:text-gray-300">
-              New Password
-            </label>
-            <input
-              type="password"
-              name="newPassword"
-              value={form.newPassword}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-md bg-navbar text-white focus:outline-none"
-            />
-          </div>
-
-          {/* Save Button */}
-          <div className="pt-4">
-            <button
-              type="submit"
-              className="px-6 py-2 bg-sidebar text-white rounded-md hover:opacity-90 transition"
-            >
-              Save Changes
-            </button>
-          </div>
+    <section className="settings-page" aria-labelledby="settings-title">
+      <div className="settings-card">
+        <span className="bugsy-eyebrow">Account</span>
+        <h1 id="settings-title" className="bugsy-page-title">Account settings</h1>
+        <p className="bugsy-page-subtitle">Manage the details displayed on your creator profile.</p>
+        <div className="settings-card__avatar"><img src={user?.avatar || thumbnailFallback} alt="Your avatar" /><div><p style={{ margin: 0, fontWeight: 700 }}>Profile image</p><p className="bugsy-field__hint">Shown beside videos and comments.</p></div><button type="button" className="bugsy-btn bugsy-btn--ghost bugsy-btn--compact" style={{ marginLeft: "auto" }}>Change image</button></div>
+        <form className="settings-form" onSubmit={save}>
+          <div className="bugsy-field"><label htmlFor="setting-full-name">Full name</label><input id="setting-full-name" name="fullName" value={form.fullName} onChange={(event) => setForm((data) => ({ ...data, fullName: event.target.value }))} /></div>
+          <div className="bugsy-field"><label htmlFor="setting-username">Username</label><input id="setting-username" name="username" value={form.username} onChange={(event) => setForm((data) => ({ ...data, username: event.target.value }))} /></div>
+          <div className="bugsy-field"><label htmlFor="setting-email">Email address</label><input id="setting-email" name="email" type="email" value={form.email} onChange={(event) => setForm((data) => ({ ...data, email: event.target.value }))} /></div>
+          <div className="auth-grid"><div className="bugsy-field"><label htmlFor="setting-password">Current password</label><input id="setting-password" type="password" value={form.password} onChange={(event) => setForm((data) => ({ ...data, password: event.target.value }))} /></div><div className="bugsy-field"><label htmlFor="setting-new-password">New password</label><input id="setting-new-password" type="password" value={form.newPassword} onChange={(event) => setForm((data) => ({ ...data, newPassword: event.target.value }))} /></div></div>
+          <div><button type="submit" className="bugsy-btn bugsy-btn--primary"><Save size={17} /> Save changes</button></div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 

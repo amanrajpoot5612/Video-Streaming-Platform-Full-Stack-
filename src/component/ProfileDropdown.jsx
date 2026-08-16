@@ -1,79 +1,41 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown, LogOut, Settings, User } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/auth-context";
 
 const ProfileDropdown = () => {
-  const { user, setUser, Logout , loading} = useAuth();
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef();
+  const { user, setUser, Logout, loading } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
 
-
-  const logoutUser = () => {
-    Logout()
-    setUser(null)
-    navigate('/')
-  }
-
   useEffect(() => {
-  }, [user])
-
-  // Close dropdown if clicking outside
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    }
-    
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    const closeOnOutsideClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) setIsOpen(false);
+    };
+    document.addEventListener("mousedown", closeOnOutsideClick);
+    return () => document.removeEventListener("mousedown", closeOnOutsideClick);
   }, []);
-  if (loading) return null;
+
+  const logout = async () => {
+    await Logout();
+    setUser(null);
+    navigate("/");
+  };
+
+  if (loading) return <span className="profile-menu__placeholder" aria-label="Loading account" />;
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
-      <div
-        className="flex items-center gap-2 cursor-pointer rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 p-2"
-        onClick={() => setOpen((prev) => !prev)}
-      >
-        {
-          user ? (
-            <img
-              src={user?.coverImage}
-              alt="Profile"
-              className="w-8 h-8 rounded-full"
-              loading="lazy" 
-
-            />
-          ) : (
-            <User className="w-8 h-8" />
-          )
-        }
-        <ChevronDown className="w-4 h-4 text-gray-600 dark:text-gray-300" />
-      </div>
-
-      {open && (
-        <div className="absolute right-0 z-20 mt-2 w-44 origin-top-right rounded-md bg-white textured-bg shadow-lg ring-1 ring-black ring-opacity-5">
-          <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
-            <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer">
-              <Link to="/profile" className="flex items-center gap-2">
-                <User className="w-4 h-4" /> Profile
-              </Link>
-            </li>
-            <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer">
-              <Link to='/settings' className="flex items-center gap-2" >
-                <Settings className="w-4 h-4" /> Settings
-              </Link>
-              
-            </li>
-            <li className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer text-red-500"
-            onClick={logoutUser} 
-            >
-                <LogOut className="w-4 h-4" />  
-            </li>
-          </ul>
+    <div className="profile-menu" ref={menuRef}>
+      <button type="button" className="profile-menu__trigger" onClick={() => setIsOpen((open) => !open)} aria-expanded={isOpen} aria-label="Open account menu">
+        {user?.avatar || user?.coverImage ? <img src={user.avatar || user.coverImage} alt="" /> : <User size={18} />}
+        <ChevronDown size={15} aria-hidden="true" />
+      </button>
+      {isOpen && (
+        <div className="profile-menu__panel">
+          <Link to="/profile" onClick={() => setIsOpen(false)}><User size={16} /> Profile</Link>
+          <Link to="/settings" onClick={() => setIsOpen(false)}><Settings size={16} /> Settings</Link>
+          <button type="button" onClick={logout}><LogOut size={16} /> Sign out</button>
         </div>
       )}
     </div>

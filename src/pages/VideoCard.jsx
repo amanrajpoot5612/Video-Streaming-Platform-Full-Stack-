@@ -1,54 +1,61 @@
-import React from 'react'
-import sign from '../assets/sign.jpg'
-import { Link } from 'react-router-dom'
-import { optimizeCloudinaryUrl } from '../utils/Cloudinary'
+import { ListPlus, MoreHorizontal } from "lucide-react";
+import { Link } from "react-router-dom";
+import thumbnailFallback from "../assets/thumbnail.jpeg";
+import { optimizeCloudinaryUrl } from "../utils/Cloudinary";
 
+const formatDate = (timestamp) => {
+  if (!timestamp) return "Recently added";
 
-const VideoCard = ({video}) => {
-  // in video card: ${video._id}`);
+  const daysAgo = Math.max(0, Math.floor((Date.now() - new Date(timestamp).getTime()) / 86_400_000));
+  if (daysAgo === 0) return "Today";
+  if (daysAgo === 1) return "1 day ago";
+  if (daysAgo < 30) return `${daysAgo} days ago`;
+  return new Date(timestamp).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+};
 
-  const formattedDate = new Date(video?.createdAt).toLocaleString("en-IN", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-});
+const formatViews = (views) => {
+  const count = Number(views);
+  if (!Number.isFinite(count)) return views || "New";
+  if (count >= 1_000_000) return `${(count / 1_000_000).toFixed(1).replace(".0", "")}M`;
+  if (count >= 1_000) return `${(count / 1_000).toFixed(1).replace(".0", "")}K`;
+  return count.toString();
+};
 
+const VideoCard = ({ video, progress }) => {
+  const owner = video?.owner || {};
+  const sourceThumbnail = video?.thumbnail || thumbnailFallback;
+  const thumbnail = typeof sourceThumbnail === "string" ? optimizeCloudinaryUrl(sourceThumbnail, 640, 360) : thumbnailFallback;
+  const avatar = owner.avatar || video?.channelAvatar || thumbnailFallback;
+  const title = video?.title || "Untitled video";
+  const channel = owner.fullName || video?.channelName || "Bugsy creator";
+  const duration = video?.duration ? `${video.duration} min` : "12:42";
+  const isLive = Boolean(video?.isLive);
 
-  function truncateWords(text, wordLimit) {
-        const words = text.split(" ");
-        if (words.length <= wordLimit) return text;
-        return words.slice(0, wordLimit).join(" ") + "…Read more";
-    }
-
-    const optimizedThumb = optimizeCloudinaryUrl(video.thumbnail, 286, 146);
-  
   return (
-    <div className="card rounded-lg overflow-hidden shadow-md bg-neutral-900 cursor-pointer hover:scale-[1.02] transition-transform duration-200">
-      <div className="relative w-full aspect-video bg-gray-700">
-        <Link to={`/watch/${video._id}`}>
-          <img src={optimizedThumb} alt="Thumbnail" className="w-full h-full object-cover" />
+    <article className="video-card">
+      <div className="video-card__thumbnail">
+        <Link to={video?._id ? `/watch/${video._id}` : "/"} aria-label={`Watch ${title}`}>
+          <img src={thumbnail} alt="" loading="lazy" />
+          {isLive ? <span className="video-card__live">• LIVE</span> : <span className="video-card__duration">{duration}</span>}
+          {typeof progress === "number" && <span className="video-card__progress"><span style={{ width: `${progress}%` }} /></span>}
         </Link>
+        <button type="button" className="video-card__quick-action" aria-label={`Add ${title} to queue`}>
+          <ListPlus size={16} />
+        </button>
       </div>
-      <div className="p-3 flex gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-600 overflow-hidden">
-          <img src={video.owner.avatar} alt="Avatar" className="w-full h-full object-cover" />
+      <div className="video-card__meta">
+        <img className="video-card__avatar" src={avatar} alt="" loading="lazy" />
+        <div className="video-card__copy">
+          <h3 className="video-card__title">{title}</h3>
+          <p className="video-card__channel">{channel}</p>
+          <p className="video-card__stats">{formatViews(video?.views)} views · {formatDate(video?.createdAt)}</p>
         </div>
-        <div className="flex flex-col text-white">
-          <h3 className="text-sm font-semibold">{video.title}</h3>
-          {/* <img src={video.owner.avatar} width={50} height={50} className='rounded-4xl' alt="" /> */}
-          <p className="text-xs text-gray-400">{video.owner.fullName}</p>
-          <p className="text-xs text-gray-400">Views: {video.views} • {formattedDate}</p>
-        </div>
-        
+        <button type="button" className="video-card__more" aria-label={`More options for ${title}`}>
+          <MoreHorizontal size={18} />
+        </button>
       </div>
-      <div className='p-2'>
-          <p className="text-gray-400 text-xs mt-1">Description: {truncateWords(video.description, 30)}</p>
-        </div>
-    </div>
+    </article>
+  );
+};
 
-  )
-}
-
-export default VideoCard
+export default VideoCard;

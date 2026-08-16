@@ -1,14 +1,9 @@
-import { createContext, useEffect, useState, useContext } from "react"
-import axios from 'axios';
+import { useEffect, useState } from "react";
 import axiosInstance from "../api/axios";
-
-const AuthContext = createContext();
-
-export const useAuth = () => useContext(AuthContext);
+import { AuthContext } from "./auth-context";
 
 export const AuthProvider = ({children}) => {
     const [user , setUser] = useState(null);
-    const [videos, setVideos] = useState([])
     const [loading, setLoading] = useState(true);
 
     // const fetchUser = async () => {

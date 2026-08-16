@@ -21,9 +21,11 @@ const Test = () => {
   };
 
   return (
-    <div className="p-4 bg-white min-h-screen">
-      <button onClick={showSuccess}>Show Success</button>
-      <button onClick={showError}>Show Error</button>
+    <div className="standalone-page" style={{ display: "grid", placeItems: "center" }}>
+      <div className="settings-card" style={{ display: "flex", gap: 12 }}>
+        <button className="bugsy-btn bugsy-btn--primary" onClick={showSuccess}>Show success</button>
+        <button className="bugsy-btn bugsy-btn--ghost" onClick={showError}>Show error</button>
+      </div>
 
       {notif && (
         <Notification
