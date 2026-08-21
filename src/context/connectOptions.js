@@ -50,20 +50,20 @@ const connectOptions = [
       icon: Globe,
       title: 'Portfolio',
       description: 'Explore my work, projects, and learn more about what I do.',
-      link: 'https://amanrajpoot.vercel.app/',
+      link: 'https://amanrajput.online/',
       linkText: 'Visit Website',
       bgColor: 'bg-purple-600',
       hoverColor: 'hover:bg-purple-700'
     },
-    {
-      icon: MessageCircle,
-      title: 'WhatsApp',
-      description: 'For quick messages or urgent matters, reach me on WhatsApp.',
-      link: 'https://wa.me/+919355505920',
-      linkText: 'Send Message',
-      bgColor: 'bg-green-500',
-      hoverColor: 'hover:bg-green-600'
-    }
+    // {
+    //   icon: MessageCircle,
+    //   title: 'WhatsApp',
+    //   description: 'For quick messages or urgent matters, reach me on WhatsApp.',
+    //   link: 'https://wa.me/+919355505920',
+    //   linkText: 'Send Message',
+    //   bgColor: 'bg-green-500',
+    //   hoverColor: 'hover:bg-green-600'
+    // }
   ];
 
 export default connectOptions;
